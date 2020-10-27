@@ -8,6 +8,9 @@ out
 # IDEA
 .idea
 *.iml
+*.ipr
 
 #Ignore local store
 ticket-store.bak
+
+.sdkmanrc

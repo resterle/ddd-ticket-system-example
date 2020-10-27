@@ -1,6 +1,8 @@
 package ticket.demo;
 
 import ticket.domain.*;
+import ticket.domain.user.Customer;
+import ticket.domain.user.Membership;
 
 public class ClientDemo {
 
@@ -34,6 +36,16 @@ public class ClientDemo {
         ticket.unwatch(BOB);
 
         info(ticket);
+
+
+        Customer customer = Customer.builder()
+                .id(new UserID())
+                .name("Hans")
+                .activeMembership(Membership.BASIC)
+                .customerNumber("4711")
+                .build();
+
+        customer.get
 
     }
 
