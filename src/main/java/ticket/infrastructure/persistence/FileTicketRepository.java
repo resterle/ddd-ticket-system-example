@@ -51,7 +51,7 @@ public class FileTicketRepository extends AbstractTicketRepository {
 
     @Override
     public TicketID next() {
-        return new TicketID(nextId++);
+        return new TicketID(String.valueOf(nextId++));
     }
 
     public void clear() {
@@ -61,8 +61,9 @@ public class FileTicketRepository extends AbstractTicketRepository {
 
     private int highestId() {
         return storage.values().stream()
-                .map(t -> t.getId().getInternalId())
-                .max((a,b) -> a.compareTo(b))
+                .map(t -> t.getId().toString())
+                .map(Integer::parseInt)
+                .max(Integer::compareTo)
                 .orElse(0);
     }
 

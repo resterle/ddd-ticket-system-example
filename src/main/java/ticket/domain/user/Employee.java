@@ -4,14 +4,14 @@ import ticket.domain.UserID;
 
 public class Employee extends User {
 
-    final private String employeeNumber;
+    final private EmployeeNumber employeeNumber;
 
-    protected Employee(UserID id, String name, String employeeNumber) {
+    protected Employee(UserID id, String name, EmployeeNumber employeeNumber) {
         super(id, name);
         this.employeeNumber = employeeNumber;
     }
 
-    public String getEmployeeNumber(){
+    public EmployeeNumber getEmployeeNumber(){
         return this.employeeNumber;
     }
 
@@ -23,7 +23,7 @@ public class Employee extends User {
 
         protected UserID id;
         protected String name;
-        protected String employeeNumber;
+        protected EmployeeNumber employeeNumber;
 
         public Employee build() {
             return new Employee(id, name, employeeNumber);
@@ -39,7 +39,7 @@ public class Employee extends User {
             return this;
         }
 
-        public Builder employeeNumber(String customerNumber){
+        public Builder employeeNumber(EmployeeNumber customerNumber){
             this.employeeNumber = customerNumber;
             return this;
         }

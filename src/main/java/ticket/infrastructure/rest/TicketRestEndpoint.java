@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ticket.application.TicketService;
 import ticket.domain.*;
+import ticket.domain.user.CustomerNumber;
+import ticket.domain.user.EmployeeNumber;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -89,7 +91,7 @@ public class TicketRestEndpoint {
                         ticket.updateTitle(tur.getTitle());
                     }
                     if (tur.assigneeChanged()) {
-                        ticket.assignTo(new UserID(tur.getAssignee()));
+                        ticket.assignTo(new EmployeeNumber(tur.getAssignee()));
                     }
                     ticketService.update(ticket);
                     return ok(TicketTO.from(ticket));
@@ -99,15 +101,15 @@ public class TicketRestEndpoint {
 
     @PostMapping("/tickets")
     public ResponseEntity<?> createTicket(@Valid @RequestBody TicketCreateRequestTO tcr) {
-        UserID reporter = new UserID(tcr.getReporter());
-        Ticket ticket = ticketService.createTicket(reporter, tcr.getTitle(), tcr.getDescription(), reporter);
+        CustomerNumber reporter = new CustomerNumber(tcr.getReporter());
+        Ticket ticket = ticketService.createTicket(reporter, tcr.getTitle(), tcr.getDescription());
         return responseTicketCreated(ticket);
     }
 
     @PostMapping("/tickets/sample")
     public ResponseEntity<?> createSampleTicket() {
-        UserID reporter = new UserID("Jane");
-        Ticket ticket = ticketService.createTicket(reporter, "This is a sample ticket.", "Some details.", reporter);
+        CustomerNumber reporter = new CustomerNumber("Jane");
+        Ticket ticket = ticketService.createTicket(reporter, "This is a sample ticket.", "Some details.");
         return responseTicketCreated(ticket);
     }
 

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.Assertions;
+import ticket.domain.user.Customer;
+import ticket.domain.user.CustomerNumber;
 
 import java.util.Stack;
 
@@ -12,7 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TicketTest {
 
-    private final UserID JOHN = new UserID();
+    private final Customer JOHN = Customer.builder()
+            .customerNumber(new CustomerNumber("John"))
+            .build();
 
     private int ticketIdGen = 1;
 
@@ -21,7 +25,7 @@ public class TicketTest {
     private TicketFactory ticketFactory = new TicketFactory(event -> {
         System.out.println(event);
         EVENT_LOG.push(event);
-    }, () -> new TicketID(ticketIdGen++) );
+    }, () -> new TicketID(String.valueOf(ticketIdGen++)) );
 
     @Test()
     public void canOnlyReopenTicketsThatAreResolvedOrClosedOrArchived() throws IllegalStateTransitionException {

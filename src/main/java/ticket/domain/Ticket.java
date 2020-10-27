@@ -2,6 +2,8 @@ package ticket.domain;
 
 import stereotypes.Aggregate;
 import stereotypes.AggregateId;
+import ticket.domain.user.CustomerNumber;
+import ticket.domain.user.EmployeeNumber;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,12 +24,12 @@ public class Ticket implements Serializable {
 
     private transient final DomainEventPublisher publisher;
     private final StateMachine stateMachine;
-    private final UserID reporter;
+    private final CustomerNumber reporter;
     private String title;
     private String description;
-    private UserID assignee;
+    private EmployeeNumber assignee;
 
-    Ticket(DomainEventPublisher publisher, TicketID id, Status status, String title, String description, UserID reporter, UserID assignee) {
+    Ticket(DomainEventPublisher publisher, TicketID id, Status status, String title, String description, CustomerNumber reporter, EmployeeNumber assignee) {
         this.publisher = publisher;
         this.id = id;
         this.stateMachine = new StateMachine(status);
@@ -104,15 +106,15 @@ public class Ticket implements Serializable {
         watchers.remove(userID);
     }
 
-    public UserID getReporter() {
+    public CustomerNumber getReporter() {
         return reporter;
     }
 
-    public UserID getAssignee() {
+    public EmployeeNumber getAssignee() {
         return assignee;
     }
 
-    public void assignTo(UserID assignee) {
+    public void assignTo(EmployeeNumber assignee) {
         this.assignee = assignee;
         ticketChanged();
     }

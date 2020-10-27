@@ -23,7 +23,7 @@ public class TicketSystemRestConfig {
 
         @Override
         public TicketID convert(String source) {
-            return new TicketID(Integer.parseInt(source));
+            return new TicketID(source);
         }
 
     }

@@ -44,6 +44,6 @@ public class InMemoryTicketRepository extends AbstractTicketRepository {
 
     @Override
     public TicketID next() {
-        return new TicketID(nextId++);
+        return new TicketID(String.valueOf(nextId++));
     }
 }

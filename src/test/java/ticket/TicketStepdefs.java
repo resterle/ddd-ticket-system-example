@@ -4,9 +4,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ticket.application.TicketService;
-import ticket.demo.DemoFactory;
+import ticket.demo.DemoTicketFactory;
 import ticket.domain.*;
 import ticket.domain.TicketFactory.TicketBuilder;
+import ticket.domain.user.Customer;
+import ticket.domain.user.CustomerNumber;
+import ticket.infrastructure.persistence.InMemoryCustomerRepository;
 import ticket.infrastructure.persistence.InMemoryTicketRepository;
 
 import java.util.Optional;
@@ -15,29 +18,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TicketStepdefs {
 
-    private final TicketFactory factory = new DemoFactory();
-    private final InMemoryTicketRepository repository = new InMemoryTicketRepository();
-    private final TicketService service = new TicketService(factory, repository);
+    private final TicketFactory factory = new DemoTicketFactory();
+    private final InMemoryTicketRepository ticketRepository = new InMemoryTicketRepository();
+    private final InMemoryCustomerRepository customerRepository = new InMemoryCustomerRepository();
+    private final TicketService service = new TicketService(factory, ticketRepository, customerRepository);
 
     private TicketID lastTicketID;
 
     @Given("No tickets exist")
     public void noTicketsExist() {
-        repository.clear();
+        ticketRepository.clear();
     }
 
     @Given("a ticket in status {word}")
     public void aTicketInStatusStatus(String statusName) {
-        TicketBuilder builder = factory.ticketBuilder(new TicketID(1),
-                new UserID("Jane"), Status.valueOf(statusName));
+        Customer JANE = Customer.builder().customerNumber(new CustomerNumber("Jane")).build();
+        TicketBuilder builder = factory.ticketBuilder(new TicketID("1"), JANE, Status.valueOf(statusName));
         Ticket ticket = builder.build();
-        repository.add(ticket);
+        ticketRepository.add(ticket);
         lastTicketID = ticket.getId();
     }
 
     @When("{word} creates new ticket")
-    public void createNewTicket(String userName) {
-        Ticket ticket = service.createTicket(new UserID(userName), "Some title.", "Some description.");
+    public void createNewTicket(String customerNumber) {
+        Customer JANE = Customer.builder()
+                .id(new UserID(customerNumber))
+                .customerNumber(new CustomerNumber(customerNumber)).build();
+        customerRepository.add(JANE);
+        Ticket ticket = service.createTicket(new CustomerNumber(customerNumber), "Some title.", "Some description.");
         lastTicketID = ticket.getId();
     }
 

@@ -4,16 +4,16 @@ import ticket.domain.UserID;
 
 public class Customer extends User {
 
-    private final String customerNumber;
+    private final CustomerNumber customerNumber;
     private final Membership activeMembership;
 
-    protected Customer(UserID id, String name, String customerNumber, Membership activeMembership) {
+    protected Customer(UserID id, String name, CustomerNumber customerNumber, Membership activeMembership) {
         super(id, name);
         this.customerNumber = customerNumber;
         this.activeMembership = activeMembership;
     }
 
-    public String getCustomerNumber(){
+    public CustomerNumber getCustomerNumber(){
         return this.customerNumber;
     }
 
@@ -29,7 +29,7 @@ public class Customer extends User {
 
         private UserID id;
         private String name;
-        private String customerNumber;
+        private CustomerNumber customerNumber;
         private Membership activeMembership;
 
         public Customer build() {
@@ -46,7 +46,7 @@ public class Customer extends User {
             return this;
         }
 
-        public Builder customerNumber(String customerNumber){
+        public Builder customerNumber(CustomerNumber customerNumber){
             this.customerNumber = customerNumber;
             return this;
         }

@@ -2,6 +2,7 @@ package ticket.infrastructure.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ticket.domain.*;
+import ticket.domain.user.CustomerNumber;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class TicketTO {
         return to;
     }
 
-    public TicketTO(TicketID id, UserID reporter, Status status) {
+    public TicketTO(TicketID id, CustomerNumber reporter, Status status) {
         this.id = id.toString();
         this.reporter = reporter.toString();
         this.status = status.toString();

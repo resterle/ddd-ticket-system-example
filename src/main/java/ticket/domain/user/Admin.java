@@ -3,7 +3,7 @@ package ticket.domain.user;
 import ticket.domain.UserID;
 
 public class Admin extends Employee {
-    protected Admin(UserID id, String name, String employeeNumber) {
+    protected Admin(UserID id, String name, EmployeeNumber employeeNumber) {
         super(id, name, employeeNumber);
     }
 

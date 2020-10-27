@@ -2,11 +2,11 @@ package ticket.demo;
 
 import ticket.domain.*;
 
-public class DemoFactory extends TicketFactory {
+public class DemoTicketFactory extends TicketFactory {
 
     private static int sequenceGen = 0;
 
-    public DemoFactory() {
+    public DemoTicketFactory() {
         super(new DomainEventPublisher() {
             @Override
             public void publish(TicketEvent event) {
@@ -15,7 +15,7 @@ public class DemoFactory extends TicketFactory {
         }, new TicketIdGenerator() {
             @Override
             public TicketID next() {
-                return new TicketID(++sequenceGen);
+                return new TicketID(String.valueOf(++sequenceGen));
             }
         });
     }
